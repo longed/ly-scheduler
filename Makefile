@@ -5,7 +5,7 @@ BIN_DIR			:= bin
 CONF_DIR		:= conf
 DOC_DIR			:= doc
 LIB_DIR			:= lib
-# CONFIG_FILE		:= config.toml
+CONFIG_FILE		:= config.toml
 
 #--------------------------------------------------------
 # build
@@ -30,7 +30,8 @@ integrate: build
 	# copy files | config-file scripts README.md docs/*
 	# yes | cp -t $(TARGET_DIR)/$(CONF_DIR) $(CONFIG_FILE)
 	yes | cp -r -t $(TARGET_DIR) misc/bin
-	yes | cp -r -t $(TARGET_DIR) misc/doc	
+	yes | cp -r -t $(TARGET_DIR) misc/doc
+	yes | cp -r -t $(TARGET_DIR) $(TARGET_DIR)/$(CONF_DIR) $(CONFIG_FILE)
 	
 	# move files 
 	yes | mv -t $(TARGET_DIR)/$(LIB_DIR) $(EXECUTABLE)

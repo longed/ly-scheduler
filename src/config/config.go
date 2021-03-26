@@ -5,10 +5,10 @@ import (
 )
 
 type ConfigOptions struct {
-	MainOptions MainOptions `toml:"main"`
+	MainOptions Main `toml:"main"`
 }
 
-type MainOptions struct {
+type Main struct {
 	Desc string `toml:"desc"`
 }
 

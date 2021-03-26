@@ -31,7 +31,7 @@ integrate: build
 	# yes | cp -t $(TARGET_DIR)/$(CONF_DIR) $(CONFIG_FILE)
 	yes | cp -r -t $(TARGET_DIR) misc/bin
 	yes | cp -r -t $(TARGET_DIR) misc/doc
-	yes | cp -r -t $(TARGET_DIR) $(TARGET_DIR)/$(CONF_DIR) $(CONFIG_FILE)
+	yes | cp -r -t $(TARGET_DIR)/$(CONF_DIR) src/$(CONFIG_FILE)
 	
 	# move files 
 	yes | mv -t $(TARGET_DIR)/$(LIB_DIR) $(EXECUTABLE)
@@ -40,9 +40,10 @@ integrate: build
 	cd $(TARGET_DIR) &&	tar cvzf $(TAR_GZ) * && cd -
 
 build: clean
-	$(GOBUILD)
+	cd src;	$(GOBUILD);	mv $(EXECUTABLE) ../; cd -
 
 clean:
 	-rm -rf $(TARGET_DIR)
+	-rm -rf $(EXECUTABLE)
 
 test:

@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"ly-scheduler/src/config"
+	"ly-scheduler/src/utils"
 )
 
 var (
@@ -22,21 +22,10 @@ func init() {
 		}
 	}
 
-	// read config from file
-	configFilePaths := []string{"./config.toml"}
-	found := false
-	for _, v := range configFilePaths {
-		if config, err := config.ReadConfig(v); err == nil {
-			configOptions = config
-			found = true
-		}
-	}
-
-	if !found {
-		log.Fatal("cannot find config.toml file. exit program.")
-	}
+	configOptions = config.GetConfigOptions()
 }
 
 func main() {
-
+	fmt.Println(utils.Weekday(""))
+	utils.WriteToExcel()
 }

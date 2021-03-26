@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"ly-scheduler/src/config"
-	
 )
 
 func init() {
@@ -21,13 +20,11 @@ func init() {
 
 	configFilePaths := []string{"./config.toml"}
 	for _, v := range configFilePaths {
-		if configOptions, err:=config.ReadConfig(v); err == nil {
+		if configOptions, err := config.ReadConfig(v); err == nil {
 			fmt.Println(configOptions.MainOptions.Desc)
 		}
-
 	}
 }
 
 func main() {
-
 }

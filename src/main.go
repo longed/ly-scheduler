@@ -27,5 +27,4 @@ func init() {
 
 func main() {
 	fmt.Println(utils.Weekday(""))
-	utils.WriteToExcel()
 }

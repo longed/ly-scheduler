@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/BurntSushi/toml"
 	"log"
+	"ly-scheduler/src/utils"
 )
 
 var (
@@ -14,13 +15,21 @@ type ConfigOptions struct {
 }
 
 type Main struct {
-	Desc           string `toml:"desc"`
-	Year           string `toml:"year"`
-	MemberFilePath string `toml:"memberFilePath"`
+	Desc           string `toml:"desc"`           // description of the program
+	YearMonthDay   string `toml:"yearMonthDay"`   // scheduler start date
+	MemberFilePath string `toml:"memberFilePath"` // file that contains members
+}
+
+// Set ConfigOptions fields default value.
+func (configOptions *ConfigOptions) setDefaultValues() {
+	configOptions.MainOptions.Desc = ""
+	configOptions.MainOptions.YearMonthDay = utils.GetYYYYMMDDDate()
+	configOptions.MainOptions.MemberFilePath = ""
 }
 
 func readConfig(path string) (ConfigOptions, error) {
 	configOptions := ConfigOptions{}
+	configOptions.setDefaultValues()
 	if _, err := toml.DecodeFile(path, &configOptions); err != nil {
 		return ConfigOptions{}, err
 	}

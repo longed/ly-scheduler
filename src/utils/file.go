@@ -3,18 +3,19 @@ package utils
 import (
 	"errors"
 	"fmt"
-	"github.com/360EntSecGroup-Skylar/excelize/v2"
 	"os"
 	"strings"
+
+	"github.com/360EntSecGroup-Skylar/excelize/v2"
 )
 
 const (
 	StringSeparator = `#`
 )
 
-// write data to excel file
-// if filepath already exist file, delete old file create new one.
-// line of data can contains multiple columns, join columns by StringSeparator.
+// Write data to excel file.
+// If filepath already exist file, delete old file create new one.
+// Line of data can contains multiple columns, join columns by StringSeparator.
 func WriteDataToExcel(filepath, sheetName string, data []string) error {
 	var f *excelize.File
 	var err error
@@ -45,4 +46,27 @@ func WriteDataToExcel(filepath, sheetName string, data []string) error {
 		}
 	}
 	return nil
+}
+
+// Read data from excel file, put all data in [][]string data type.
+func ReadDataFromExcel(filepath, sheetName string) ([][]string, error) {
+	if len(strings.TrimSpace(filepath)) == 0 {
+		return [][]string{}, fmt.Errorf("filepath is blank")
+	}
+
+	if _, err := os.Stat(filepath); errors.Is(err, os.ErrNotExist) {
+		return [][]string{}, fmt.Errorf("file not exist. filepath=%s", filepath)
+	}
+
+	var f *excelize.File
+	var err error
+	if f, err = excelize.OpenFile(filepath); err != nil {
+		return [][]string{}, fmt.Errorf("open file errpr, err=%v", err)
+	}
+	return f.GetRows(sheetName)
+}
+
+// Read data from sheet "Sheet1"
+func ReadDataFromExcelSheet1(filepath string) ([][]string, error) {
+	return ReadDataFromExcel(filepath, "Sheet1")
 }

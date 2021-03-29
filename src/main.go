@@ -22,9 +22,11 @@ func init() {
 		}
 	}
 
+	// init configuration
 	configOptions = config.GetConfigOptions()
 }
 
 func main() {
 	fmt.Println(utils.Weekday(""))
+	fmt.Println(configOptions.MainOptions.YearMonthDay)
 }

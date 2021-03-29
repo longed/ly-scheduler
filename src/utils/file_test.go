@@ -24,3 +24,27 @@ func TestWriteDataToExcel(t *testing.T) {
 
 	}
 }
+
+func TestReadDataFromExcel(t *testing.T) {
+	currentDir, _ := os.Getwd()
+	var tests = []struct {
+		filepath  string
+		sheetName string
+	}{
+		{fmt.Sprintf("%s/test3.xlsx", currentDir), "Table 1"},
+	}
+
+	for _, test := range tests {
+		rows, err := ReadDataFromExcel(test.filepath, test.sheetName)
+		if err != nil {
+			t.Errorf("ReadDataFromExcel(%s) failed: %v", test.filepath, err)
+		}
+
+		for _, row := range rows {
+			for _, col := range row {
+				fmt.Printf("%s\t", col)
+			}
+			fmt.Println()
+		}
+	}
+}

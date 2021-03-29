@@ -2,6 +2,7 @@ package model
 
 import (
 	"ly-scheduler/src/utils"
+	"strconv"
 	"strings"
 )
 
@@ -39,4 +40,22 @@ func SaveScheduleResult(filepath string, records []ScheduleRecord) error {
 		data = append(data, record.toString())
 	}
 	return utils.WriteDataToExcel(filepath, "Sheet1", data)
+}
+
+// Read MemberRecordSlice from excel
+func ReadMemberRecordSlice(filepath string) ([]MemberRecord, error) {
+	rows, err := utils.ReadDataFromExcelSheet1(filepath)
+	if err != nil {
+		return []MemberRecord{}, err
+	}
+
+	var mrSlice []MemberRecord
+	for _, row := range rows {
+		mr := MemberRecord{}
+		mr.MemberName = row[0]
+		mr.IsScheduling, _ = strconv.ParseBool(row[1])
+		mr.Reason = row[2]
+		mrSlice = append(mrSlice, mr)
+	}
+	return mrSlice, nil
 }

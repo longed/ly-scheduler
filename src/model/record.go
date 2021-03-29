@@ -29,6 +29,10 @@ func (sr *ScheduleRecord) toString() string {
 		sr.Date7, sr.Ext)
 }
 
+func (mr *MemberRecord) toString() string {
+	return JoinStrings(utils.CommaStringSeparator, mr.MemberName, strconv.FormatBool(mr.IsScheduling), mr.Reason)
+}
+
 func JoinStrings(sep string, elem ...string) string {
 	return strings.Join(elem, sep)
 }
@@ -52,9 +56,16 @@ func ReadMemberRecordSlice(filepath string) ([]MemberRecord, error) {
 	var mrSlice []MemberRecord
 	for _, row := range rows {
 		mr := MemberRecord{}
-		mr.MemberName = row[0]
-		mr.IsScheduling, _ = strconv.ParseBool(row[1])
-		mr.Reason = row[2]
+		if len(row) >= 1 {
+			mr.MemberName = row[0]
+		}
+		if len(row) >= 2 {
+			mr.IsScheduling, _ = strconv.ParseBool(row[1])
+		}
+		if len(row) >= 3 {
+			mr.Reason = row[2]
+		}
+
 		mrSlice = append(mrSlice, mr)
 	}
 	return mrSlice, nil

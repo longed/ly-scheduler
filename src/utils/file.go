@@ -10,7 +10,8 @@ import (
 )
 
 const (
-	StringSeparator = `#`
+	StringSeparator      = `#`
+	CommaStringSeparator = `,`
 )
 
 // Write data to excel file.
@@ -31,7 +32,7 @@ func WriteDataToExcel(filepath, sheetName string, data []string) error {
 	f.NewSheet(sheetName)
 
 	for lineNumber, line := range data {
-		// split every line to get colmuns
+		// split every line to get columns
 		cols := strings.Split(line, StringSeparator)
 
 		for colNumber, col := range cols {

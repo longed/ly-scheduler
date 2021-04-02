@@ -19,7 +19,7 @@ endif
 FAIL_ON_STDOUT := awk '{ print } END { if (NR > 0) { exit 1 } }'
 
 GO              := GO111MODULE=on go
-GOBUILD         := $(GO) build -o $(EXECUTABLE) .
+GOBUILD         := $(GO) build -gcflags="all=-N -l" -o $(EXECUTABLE) .
 
 .PHONY: integrate build clean test
 

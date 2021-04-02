@@ -37,8 +37,7 @@ func WriteDataToExcel(filepath, sheetName string, data []string) error {
 
 		for colNumber, col := range cols {
 			// row and column index start from 1
-			// first row cannot be used
-			cellName, err := excelize.CoordinatesToCellName(colNumber+1, lineNumber+2)
+			cellName, err := excelize.CoordinatesToCellName(colNumber+1, lineNumber+1)
 			if err != nil {
 				fmt.Printf("convert coordinate to cell name error, err=%v, can't write value to file\n", err)
 				continue

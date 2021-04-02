@@ -1,5 +1,7 @@
 package schedule
 
-type Schedule interface {
-	DoSchedule(string) string
+import "ly-scheduler/src/model"
+
+type Scheduler interface {
+	DoSchedule(string) []model.MemberRecord
 }

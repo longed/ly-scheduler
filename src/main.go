@@ -4,11 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"ly-scheduler/src/config"
-	"ly-scheduler/src/utils"
-)
-
-var (
-	configOptions config.ConfigOptions
+	"ly-scheduler/src/model"
+	"ly-scheduler/src/schedule"
 )
 
 func init() {
@@ -21,12 +18,12 @@ func init() {
 			break
 		}
 	}
-
-	// init configuration
-	configOptions = config.GetConfigOptions()
 }
 
 func main() {
-	fmt.Println(utils.Weekday(""))
-	fmt.Println(configOptions.MainOptions.YearMonthDay)
+	srSlice := schedule.RsScheduler.DoSchedule("")
+	err := model.SaveScheduleResult(config.AllOptions.MainOptions.ScheduleTableFilePath, srSlice)
+	if err == nil {
+		fmt.Printf("create schedule table success.\n")
+	}
 }

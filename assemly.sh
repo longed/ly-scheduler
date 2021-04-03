@@ -3,7 +3,7 @@
 # create directory by loop
 function mkdir_loop () {
     for i in $*; do
-        mkdir $i
+        mkdir -p $i
     done
 }
 

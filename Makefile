@@ -1,10 +1,11 @@
 EXECUTABLE		:= ly-scheduler
-TAR_GZ			:= $(EXECUTABLE).tar.gz
+PKG_DIR			:= $(EXECUTABLE).$(shell date +"%F"-"%H"-"%M"-"%S"-"%Z")
+TAR_GZ			:= $(PKG_DIR).tar.gz
 TARGET_DIR		:= targets
-BIN_DIR			:= bin
-CONF_DIR		:= conf
-DOC_DIR			:= doc
-LIB_DIR			:= lib
+BIN_DIR			:= $(PKG_DIR)/bin
+CONF_DIR		:= $(PKG_DIR)/conf
+DOC_DIR			:= $(PKG_DIR)/doc
+LIB_DIR			:= $(PKG_DIR)/lib
 CONFIG_FILE		:= config.toml
 
 #--------------------------------------------------------
@@ -29,8 +30,8 @@ integrate: build
 
 	# copy files | config-file scripts README.md docs/*
 	# yes | cp -t $(TARGET_DIR)/$(CONF_DIR) $(CONFIG_FILE)
-	yes | cp -r -t $(TARGET_DIR) misc/bin
-	yes | cp -r -t $(TARGET_DIR) misc/doc
+	yes | cp -r -t $(TARGET_DIR)/$(PKG_DIR) misc/bin
+	yes | cp -r -t $(TARGET_DIR)/$(PKG_DIR) misc/doc
 	yes | cp -r -t $(TARGET_DIR)/$(CONF_DIR) src/$(CONFIG_FILE)
 	
 	# move files 

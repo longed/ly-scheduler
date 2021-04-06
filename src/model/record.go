@@ -5,14 +5,18 @@ import (
 	"ly-scheduler/src/config"
 	"ly-scheduler/src/utils"
 	"sort"
-	"strconv"
 	"strings"
 	"time"
 )
 
+const (
+	CHINESE_YES = "是"
+	CHINESE_NO  = "否"
+)
+
 type MemberRecord struct {
 	MemberName             string
-	SchedulingStatus       int64 // 0 = schedule, 1 = not schedule, 2 = other
+	SchedulingStatus       string
 	Reason                 string
 	SpecificWorkingWeekday string
 }
@@ -62,12 +66,12 @@ func (sr *ScheduleRecord) getTitle(beg, end int) string {
 }
 
 func (mr *MemberRecord) toString() string {
-	return JoinStrings(utils.CommaStringSeparator, mr.MemberName, strconv.FormatInt(mr.SchedulingStatus, 10), mr.Reason)
+	return JoinStrings(utils.CommaStringSeparator, mr.MemberName, mr.SchedulingStatus, mr.Reason)
 }
 
 func (mr *MemberRecord) setDefaultValue() {
 	mr.Reason = ""
-	mr.SchedulingStatus = 0
+	mr.SchedulingStatus = CHINESE_NO
 	mr.MemberName = ""
 }
 
@@ -126,7 +130,7 @@ func ReadMemberRecordSlice(filepath string) ([]MemberRecord, error) {
 			mr.MemberName = row[0]
 		}
 		if len(row) >= 2 {
-			mr.SchedulingStatus, _ = strconv.ParseInt(row[1], 10, 32)
+			mr.SchedulingStatus = row[1]
 		}
 		if len(row) >= 3 {
 			mr.Reason = row[2]

@@ -33,7 +33,7 @@ func init() {
 func (rs *RandomScheduler) DoSchedule(string) []model.ScheduleRecord {
 	shuffle(rs.MrSlice)
 
-	validMemberRecordSlice := selectMemberRecordByStatus(rs.MrSlice, model.ChineseYes)
+	validMemberRecordSlice := selectMemberRecord(rs.MrSlice, model.ChineseYes, statusEqualSelector)
 	size := len(validMemberRecordSlice)
 	schedulePeriodDayTimes := rs.AllOptions.SchedulePeriodDays(size)
 
@@ -52,7 +52,7 @@ func (rs *RandomScheduler) DoSchedule(string) []model.ScheduleRecord {
 		srSlice = append(srSlice, sr)
 	}
 
-	invalidMemberRecordSlice := selectMemberRecordWithNotStatus(rs.MrSlice, model.ChineseYes)
+	invalidMemberRecordSlice := selectMemberRecord(rs.MrSlice, model.ChineseYes, statusNotEqualSelector)
 	for _, mr := range invalidMemberRecordSlice {
 		sr := model.ScheduleRecord{}
 		sr.TableContent = make(map[string]string)
@@ -66,22 +66,22 @@ func (rs *RandomScheduler) DoSchedule(string) []model.ScheduleRecord {
 	return srSlice
 }
 
-func selectMemberRecordByStatus(mrSlice []model.MemberRecord, status string) []model.MemberRecord {
+type statusSelectFunc func(string, string) bool
+
+func selectMemberRecord(mrSlice []model.MemberRecord, status string, statusSelector statusSelectFunc) []model.MemberRecord {
 	var wantStatusSlice []model.MemberRecord
 	for _, mr := range mrSlice {
-		if mr.SchedulingStatus == status {
+		if statusSelector(mr.SchedulingStatus, status) {
 			wantStatusSlice = append(wantStatusSlice, mr)
 		}
 	}
 	return wantStatusSlice
 }
 
-func selectMemberRecordWithNotStatus(mrSlice []model.MemberRecord, status string) []model.MemberRecord {
-	var wantStatusSlice []model.MemberRecord
-	for _, mr := range mrSlice {
-		if mr.SchedulingStatus != status {
-			wantStatusSlice = append(wantStatusSlice, mr)
-		}
-	}
-	return wantStatusSlice
+func statusEqualSelector(leftStatus, rightStatus string) bool {
+	return leftStatus == rightStatus
+}
+
+func statusNotEqualSelector(leftStatus, rightStatus string) bool {
+	return leftStatus != rightStatus
 }

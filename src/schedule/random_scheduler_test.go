@@ -18,19 +18,19 @@ func TestRandomScheduler_DoSchedule(t *testing.T) {
 	var mrSlice []model.MemberRecord
 	mrSlice = append(mrSlice, model.MemberRecord{
 		MemberName:             "ABC",
-		SchedulingStatus:       0,
+		SchedulingStatus:       "是",
 		Reason:                 "",
 		SpecificWorkingWeekday: "",
 	})
 	mrSlice = append(mrSlice, model.MemberRecord{
 		MemberName:             "EFG",
-		SchedulingStatus:       0,
+		SchedulingStatus:       "是",
 		Reason:                 "",
 		SpecificWorkingWeekday: "",
 	})
 	mrSlice = append(mrSlice, model.MemberRecord{
 		MemberName:             "HIJ",
-		SchedulingStatus:       1,
+		SchedulingStatus:       "否",
 		Reason:                 "",
 		SpecificWorkingWeekday: "",
 	})
@@ -41,4 +41,27 @@ func TestRandomScheduler_DoSchedule(t *testing.T) {
 
 	srSlice := rs.DoSchedule("")
 	fmt.Println(len(srSlice))
+}
+
+func TestSelector(t *testing.T) {
+	var mrSlice []model.MemberRecord
+	mrSlice = append(mrSlice, model.MemberRecord{
+		MemberName:             "ABC",
+		SchedulingStatus:       "是",
+		Reason:                 "",
+		SpecificWorkingWeekday: "",
+	})
+	mrSlice = append(mrSlice, model.MemberRecord{
+		MemberName:             "EFG",
+		SchedulingStatus:       "是",
+		Reason:                 "",
+		SpecificWorkingWeekday: "",
+	})
+	mrSlice = append(mrSlice, model.MemberRecord{
+		MemberName:             "HIJ",
+		SchedulingStatus:       "否",
+		Reason:                 "",
+		SpecificWorkingWeekday: "",
+	})
+	selectMemberRecord(mrSlice, "是", statusEqualSelector)
 }

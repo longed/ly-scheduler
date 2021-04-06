@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	CHINESE_YES = "是"
-	CHINESE_NO  = "否"
+	ChineseYes = "是"
+	ChineseNo  = "否"
 )
 
 type MemberRecord struct {
@@ -71,7 +71,7 @@ func (mr *MemberRecord) toString() string {
 
 func (mr *MemberRecord) setDefaultValue() {
 	mr.Reason = ""
-	mr.SchedulingStatus = CHINESE_NO
+	mr.SchedulingStatus = ChineseNo
 	mr.MemberName = ""
 }
 

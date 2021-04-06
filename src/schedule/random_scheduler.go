@@ -33,7 +33,7 @@ func init() {
 func (rs *RandomScheduler) DoSchedule(string) []model.ScheduleRecord {
 	shuffle(rs.MrSlice)
 
-	validMemberRecordSlice := selectMemberRecordByStatus(rs.MrSlice, model.CHINESE_YES)
+	validMemberRecordSlice := selectMemberRecordByStatus(rs.MrSlice, model.ChineseYes)
 	size := len(validMemberRecordSlice)
 	schedulePeriodDayTimes := rs.AllOptions.SchedulePeriodDays(size)
 
@@ -52,7 +52,7 @@ func (rs *RandomScheduler) DoSchedule(string) []model.ScheduleRecord {
 		srSlice = append(srSlice, sr)
 	}
 
-	invalidMemberRecordSlice := selectMemberRecordWithNotStatus(rs.MrSlice, model.CHINESE_YES)
+	invalidMemberRecordSlice := selectMemberRecordWithNotStatus(rs.MrSlice, model.ChineseYes)
 	for _, mr := range invalidMemberRecordSlice {
 		sr := model.ScheduleRecord{}
 		sr.TableContent = make(map[string]string)

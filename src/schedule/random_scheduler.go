@@ -59,7 +59,7 @@ func (rs *RandomScheduler) DoSchedule(string) []model.ScheduleRecord {
 
 		sr.Name = mr.MemberName
 		for i := 0; i < len(schedulePeriodDayTimes); i++ {
-			sr.TableContent[schedulePeriodDayTimes[i].Format("2006-01-02")] = "-"
+			sr.TableContent[schedulePeriodDayTimes[i].Format("2006-01-02")] = mr.Reason
 		}
 		srSlice = append(srSlice, sr)
 	}

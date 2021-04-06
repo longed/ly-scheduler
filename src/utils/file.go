@@ -30,6 +30,7 @@ func WriteDataToExcel(filepath, sheetName string, data []string) error {
 	defer f.SaveAs(filepath)
 
 	f.NewSheet(sheetName)
+	style, _ := f.NewStyle(`{"alignment":{"wrap_text":true}}`)
 
 	for lineNumber, line := range data {
 		// split every line to get columns
@@ -38,6 +39,9 @@ func WriteDataToExcel(filepath, sheetName string, data []string) error {
 		for colNumber, col := range cols {
 			// row and column index start from 1
 			cellName, err := excelize.CoordinatesToCellName(colNumber+1, lineNumber+1)
+			if lineNumber == 0 {
+				f.SetCellStyle(sheetName, cellName, cellName, style)
+			}
 			if err != nil {
 				fmt.Printf("convert coordinate to cell name error, err=%v, can't write value to file\n", err)
 				continue

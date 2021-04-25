@@ -43,7 +43,8 @@ func (configOptions *AllConfigOptions) setDefaultValues() {
 
 	configOptions.MainOptions.Desc = "A scheduler program"
 	configOptions.MainOptions.YearMonthDay = utils.GetYYYYMMDDDate()
-	configOptions.MainOptions.MemberFilePath = fmt.Sprintf("%s%cmember.xlsx", currentDir, os.PathSeparator)
+	configOptions.MainOptions.MemberFilePath = fmt.Sprintf("%s%c..%cdoc%cmember.xlsx", currentDir,
+		os.PathSeparator, os.PathSeparator, os.PathSeparator)
 	configOptions.MainOptions.SchedulePeriod = Week
 	configOptions.MainOptions.ScheduleTableFilePath = fmt.Sprintf("%s%c排班表.xlsx", currentDir, os.PathSeparator)
 }
